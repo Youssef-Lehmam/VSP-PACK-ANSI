@@ -1,0 +1,30 @@
+name: Packer Build
+
+on: workflow_dispatch
+
+env:
+  VERSION: "latest"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup Packer
+      uses: hashicorp/setup-packer@main
+      id: setup
+      with:
+        version: ${{ env.VERSION }}
+     
+    - name: Initialize Packer
+      working-directory: packer
+      id: init
+      run: packer init .
+
+    - name: Validate Packer configuration
+      working-directory: packer
+      id: validate
+      run: packer validate .

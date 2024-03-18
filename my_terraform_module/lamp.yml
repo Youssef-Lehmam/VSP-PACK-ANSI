@@ -1,0 +1,15 @@
+- name: instsall pkgs
+  hosts: web
+  become: yes
+  tasks:
+    - name: install multiple packages - LAMP
+      register: updatesys
+      apt:
+        update_cache: yes
+        name:
+          - firewalld
+          - apache2
+          - mariadb-server
+          - php
+          - php-mysql
+        state: present
