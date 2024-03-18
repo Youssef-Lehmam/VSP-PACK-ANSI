@@ -3,15 +3,15 @@ module "my_vm_module" {
   source = "./my_terraform_module"
 
   # Set your variables here
-  vsphere_user           = "your_vsphere_user"
-  vsphere_password       = "your_vsphere_password"
+  vsphere_user           = "User@vsphere.local"
+  vsphere_password       = "Orange@2024"
   vsphere_ip_address     = "your_vcenter_server_ip"
   vsphere_datacenter     = "your_datacenter_name"
   vsphere_cluster        = "your_cluster_name"
   datastore              = "your_datastore_name"
   vm_cpu                 = 2
-  vm_ram                 = 4096
-  vm_name                = "your_vm_name"
+  vm_ram                 = 2048
+  vm_name                = "TEST"
   vm_size                = 50
   vsphere_unverified_ssl = true  
   vm_network             = "your_vm_network"
