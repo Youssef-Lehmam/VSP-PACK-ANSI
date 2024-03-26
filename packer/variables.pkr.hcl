@@ -22,10 +22,10 @@ variable "boot_comand" {
     "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
     "<bs><bs><bs>", "/install/vmlinuz noapic ",
     " initrd=/install/initrd.gz", " priority=critical",
-    " locale=en_US", "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg",
+    " locale=en_US", " netcfg/get_ipaddress=192.168.1.100 netcfg/get_netmask=255.255.255.0 netcfg/get_gateway=192.168.1.1 netcfg/get_nameservers=8.8.8.8 netcfg/confirm_static=true",
+    " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg",
     "<enter>"
   ]
-
 }
 
 variable "boot_wait" {
