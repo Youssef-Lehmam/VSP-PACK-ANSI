@@ -1,0 +1,63 @@
+#cloud-config
+autoinstall:
+  version: 1
+  refresh-installer:  # start with an up-to-date installer
+  update: yes
+
+  locale: en_FR.UTF-8
+  keyboard:
+  layout: "fr"
+
+  early-commands:
+    - systemctl stop ssh # otherwise packer tries to connect and exceed max attempts
+    - hostnamectl set-hostname ubuntu-00 # update hostname even for the installer environment
+    - dhclient # re-register the updated hostname
+
+  network:
+    version: 2
+    ethernets:
+      eth0:
+        dhcp4: yes
+
+  ssh:
+    allow-pw: true
+    install-server: true
+
+  storage:
+    layout:
+      name: lvm
+
+  packages:
+    - build-essential
+    - network-manager
+    - open-vm-tools # for vmware hypervisor
+    - ansible
+    - git
+    - net-tools
+    - gparted
+  package_update: true
+  package_upgrade: true
+
+  user-data:
+    timezone: Africa/Casablanca
+    hostname: ubuntu-00
+    users:
+      - name: youssef
+        gecos: Youssef
+        # The command to hash the password is: openssl passwd -6 -stdin <<< [plain_text_password]
+        # This password is: admin
+        passwd: $6$xyz$UUh2qdKKism9Q/1D4sozbMaeCgm0CTlAypDtWKnVb4bsOFpr8uS.Xo4E.LY9IsEMD.xAtmkZtOCKTGy8ydp7X1
+        groups: sudo
+        sudo: ['ALL=(ALL) NOPASSWD:ALL']        
+        lock_passwd: false
+        shell: /bin/bash
+      - name: user
+        gecos: Ubuntu User
+        # This password is: user
+        passwd: $6$Ehc/g3v/Px9YRt3U$iTXuZYgyniNDVs6OSpnJ3PuGuZDeJpromK.eZUrhpQBbxuZKm.kD00U5Ukxhi8VmDQcXilLEl9acyzJvBf.Qf/
+        lock_passwd: false        
+        shell: /bin/bash  
+
+  late-commands:
+    - sed -ie 's/GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="net.ifnames=0 biosdevname=0"/' /target/etc/default/grub
+    - curtin in-target --target /target update-grub2
