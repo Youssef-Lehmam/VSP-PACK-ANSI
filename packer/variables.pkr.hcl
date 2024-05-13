@@ -11,8 +11,11 @@ variable "RAM" {
 variable "boot_comand" {
   type = list(string)
   default = [
-    "<esc><wait><esc><wait><f6><wait><esc><wait>",
-    "autoinstall net.ifnames=0 biosdevname=0 ip=dhcp ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/"
+    "<esc><enter><f6><esc><wait> ",
+    "<bs><bs><bs><bs><bs>",
+    "ip=192.168.1.100::192.168.1.1:255.255.255.0::::1.1.1.1 ",
+    "autoinstall ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ ",
+    "--- <enter>"
   ]
 }
 
