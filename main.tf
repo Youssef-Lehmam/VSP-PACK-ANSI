@@ -1,8 +1,6 @@
-# Import the module
 module "my_vm_module" {
   source = "./my_terraform_module"
 
-  # Set your variables here
   vsphere_user           = "User@vsphere.local"
   vsphere_password       = "Orange@2024"
   vsphere_ip_address     = "your_vcenter_server_ip"

@@ -11,26 +11,14 @@ variable "RAM" {
 variable "boot_comand" {
   type = list(string)
   default = [
-    "<enter><wait><f6><wait><esc><wait>",
-    "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-    "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-    "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-    "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-    "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-    "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-    "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-    "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-    "<bs><bs><bs>", "/install/vmlinuz noapic ",
-    " initrd=/install/initrd.gz", " priority=critical",
-    " locale=en_US", " netcfg/get_ipaddress=192.168.1.100 netcfg/get_netmask=255.255.255.0 netcfg/get_gateway=192.168.1.1 netcfg/get_nameservers=8.8.8.8 netcfg/confirm_static=true",
-    " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg",
-    "<enter>"
+    "<esc><wait><esc><wait><f6><wait><esc><wait>",
+    "autoinstall net.ifnames=0 biosdevname=0 ip=dhcp ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/"
   ]
 }
 
 variable "boot_wait" {
   type    = string
-  default = "20s"
+  default = "8s"
 }
 
 
